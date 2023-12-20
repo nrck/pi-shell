@@ -63,21 +63,21 @@ function if_error_return() {
 
 function apt_update() {
     console_log "apt-get update started."
-    sudo apt-get update -qq
+    sudo apt-get -qq update
     if_error_return $? "apt-get update"
     return $?
 }
 
 function apt_upgrade() {
     console_log "apt-get upgrade started."
-    sudo apt-get upgrade -y -qq
+    sudo apt-get -qq -y upgrade 
     if_error_return $? "apt-get upgrade"
     return $?
 }
 
 function apt_install() {
     console_log "Install: $1"
-    sudo apt-get install -y --no-install-recommends -qq $1
+    sudo apt-get -y --no-install-recommends -qq install $1
     if_error_return $? "Install $1"
     return $?
 }
