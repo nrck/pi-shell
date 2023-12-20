@@ -26,7 +26,10 @@ sudo apt-get install -y --no-install-recommends \
     ffmpeg \
     raspberrypi-kernel \
     raspberrypi-kernel-headers \
-    dkms
+    dkms \
+    ca-certificates \
+    curl \
+    gnupg
 
 # 一旦再起動
 sudo shutdown -r now
