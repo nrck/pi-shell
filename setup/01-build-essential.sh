@@ -25,7 +25,8 @@ sudo apt-get install -y --no-install-recommends \
     cmake \
     ffmpeg \
     raspberrypi-kernel \
-    raspberrypi-kernel-headers
+    raspberrypi-kernel-headers \
+    dkms
 
 # 一旦再起動
 sudo shutdown -r now
