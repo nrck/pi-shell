@@ -28,4 +28,4 @@ sudo apt-get install -y --no-install-recommends \
     raspberrypi-kernel-headers
 
 # 一旦再起動
-sudo reboot
+sudo shutdown -r now
