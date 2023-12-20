@@ -143,7 +143,8 @@ function fn01_build_essential() {
     fi
     section_title "[Job 1] Install build essentials. Done."
     console_log "${bold}${yellow}The Raspberry Pi will be reboot after 10 sec.${normal}"
-    sudo shutdown -r +10
+    sleep 10s
+    sudo shutdown -r now
 }
 
 function fn02_build_fw_w3u4() {
