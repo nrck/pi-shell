@@ -400,10 +400,11 @@ function fn04_setup_mirakurun_epgstation() {
     sudo pm2 save
     if_error_exit "Save pm2"
 
+    sleep 5s
     console_log "${bold}========================================${normal}"
     console_log "${bold}Node.js    : ${cyan}$(nodejs -v)${normal}"
     console_log "${bold}npm        : ${cyan}$(npm -v)${normal}"
-    console_log "${bold}pm2        : ${cyan}$(pm2 -V)${normal}"
+    console_log "${bold}pm2        : ${cyan}$(sudo pm2 -V)${normal}"
     console_log "${bold}mirakurun  : ${cyan}$(sudo mirakurun version | grep mirakurun | cut -d '@' -f 2)${normal}"
     console_log "${bold}EPGStation : ${cyan}$(curl -s http://localhost:8888/api/version | cut -d '"' -f 4)${normal}"
     console_log "${bold}========================================${normal}"
@@ -433,12 +434,15 @@ function fn00_interactive_menu() {
                 ;;
             "[Job2] Build Firmware PX-W3U4.")
                 fn02_build_fw_w3u4
+                break
                 ;;
             "[Job3] Setup Recording tools.")
                 fn03_setup_rec_tools
+                break
                 ;;
             "[Job4] Setup Mirakurun and EPGStation.")
                 fn04_setup_mirakurun_epgstation
+                break
                 ;;
             "       Exit.")
                 exit 0
