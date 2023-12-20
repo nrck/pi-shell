@@ -4,3 +4,6 @@ curl -fsSL https://raw.githubusercontent.com/nrck/pi-shell/master/setup/02-build
 curl -fsSL https://raw.githubusercontent.com/nrck/pi-shell/master/setup/03-setup-rec-tools.sh | bash -
 curl -fsSL https://raw.githubusercontent.com/nrck/pi-shell/master/setup/04-setup-mirakurun.sh | bash -
 curl -fsSL https://raw.githubusercontent.com/nrck/pi-shell/master/setup/05-setup-epgstation.sh | bash -
+
+# For Raspberry Pi 5
+curl -fsSL https://raw.githubusercontent.com/nrck/pi-shell/master/setup/10-rpi5-setup.sh | bash -
