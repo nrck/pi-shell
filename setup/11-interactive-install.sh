@@ -43,7 +43,7 @@ function section_title() {
 function if_error_exit() {
     return_code=$1
     action=$2
-    if [ $return_code -ne 0 ]; then
+    if [ "$return_code" -ne "0" ]; then
         console_error "${action} is failed."
         exit 1
     fi
@@ -53,11 +53,11 @@ function if_error_exit() {
 function if_error_return() {
     return_code=$1
     action=$2
-    if [ $return_code -ne 0 ]; then
-        console_error "${action} is failed."
+    if [ "$return_code" -ne "0" ]; then
+        console_error "${action}: Failed."
         return 1
     fi
-    console_success "Done."
+    console_success "${action}: Done."
     return 0
 }
 
@@ -399,22 +399,27 @@ function fn04_setup_mirakurun_epgstation() {
     console_log "Save pm2"
     sudo pm2 save
     if_error_exit "Save pm2"
+    sleep 5
 
-    console_log "${bold}========================================${normal}"
-    console_log "${bold}Node.js    : ${cyan}$(nodejs -v)${normal}"
-    console_log "${bold}npm        : ${cyan}$(npm -v)${normal}"
-    console_log "${bold}pm2        : ${cyan}$(pm2 -V)${normal}"
-    console_log "${bold}mirakurun  : ${cyan}$(sudo mirakurun version | grep mirakurun | cut -d '@' -f 2)${normal}"
-    console_log "${bold}EPGStation : ${cyan}$(curl -s http://localhost:8888/api/version | cut -d '"' -f 4)${normal}"
-    console_log "${bold}========================================${normal}"
+    fn05_check_version
     cd user_pwd
 
     section_title "[Job 4] Setup Mirakurun and EPGStation. Done!"
 }
 
+function fn05_check_version() {
+    console_log "${bold}========================================${normal}"
+    console_log "${bold}Node.js    : ${cyan}$(nodejs -v)${normal}"
+    console_log "${bold}npm        : ${cyan}$(npm -v)${normal}"
+    console_log "${bold}pm2        : ${cyan}$(sudo pm2 -V)${normal}"
+    console_log "${bold}mirakurun  : ${cyan}$(sudo mirakurun version | grep mirakurun | cut -d '@' -f 2)${normal}"
+    console_log "${bold}EPGStation : ${cyan}$(curl -s http://localhost:8888/api/version | cut -d '"' -f 4)${normal}"
+    console_log "${bold}========================================${normal}"
+}
+
 function fn00_interactive_menu() {
     section_title "Why not try recording anime easily with Raspberry Pi!\n\t\tCould you select a job?"
-    select choice in ">>>>>> Exec init (Job1)" ">>>>>> Exec install (Job2, Job3)" "[Job1] Install build essentials." "[Job2] Build Firmware PX-W3U4." "[Job3] Setup Recording tools." "[Job4] Setup Mirakurun and EPGStation." "       Exit."
+    select choice in ">>>>>> Exec init (Job1)" ">>>>>> Exec install (Job2, Job3)" "[Job1] Install build essentials." "[Job2] Build Firmware PX-W3U4." "[Job3] Setup Recording tools." "[Job4] Setup Mirakurun and EPGStation." "[Job5] Check Version." "       Exit."
     do
         case $choice in
             ">>>>>> Exec init (Job1)")
@@ -439,6 +444,9 @@ function fn00_interactive_menu() {
                 ;;
             "[Job4] Setup Mirakurun and EPGStation.")
                 fn04_setup_mirakurun_epgstation
+                ;;
+            "[Job5] Check Version."
+                fn05_check_version
                 ;;
             "       Exit.")
                 exit 0
