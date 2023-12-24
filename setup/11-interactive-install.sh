@@ -445,7 +445,7 @@ function fn00_interactive_menu() {
             "[Job4] Setup Mirakurun and EPGStation.")
                 fn04_setup_mirakurun_epgstation
                 ;;
-            "[Job5] Check Version."
+            "[Job5] Check Version.")
                 fn05_check_version
                 ;;
             "       Exit.")
