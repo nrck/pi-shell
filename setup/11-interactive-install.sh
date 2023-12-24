@@ -419,7 +419,7 @@ function fn05_check_version() {
 
 function fn00_interactive_menu() {
     section_title "Why not try recording anime easily with Raspberry Pi!\n\t\tCould you select a job?"
-    select choice in ">>>>>> Exec init (Job1)" ">>>>>> Exec install (Job2, Job3)" "[Job1] Install build essentials." "[Job2] Build Firmware PX-W3U4." "[Job3] Setup Recording tools." "[Job4] Setup Mirakurun and EPGStation." "[Job5] Check Version." "       Exit."
+    select choice in ">>>>>> Exec init (Job1)" ">>>>>> Exec install (Job2, Job3, Job4, Job5)" "[Job1] Install build essentials." "[Job2] Build Firmware PX-W3U4." "[Job3] Setup Recording tools." "[Job4] Setup Mirakurun and EPGStation." "[Job5] Check Version." "       Exit."
     do
         case $choice in
             ">>>>>> Exec init (Job1)")
