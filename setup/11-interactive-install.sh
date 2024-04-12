@@ -1,4 +1,5 @@
 #!/bin/bash
+# 2024-04-12 Ver 1.1
 
 if test -t 1; then
     ncolors=$(which tput > /dev/null && tput colors)
@@ -152,8 +153,8 @@ function fn02_build_fw_w3u4() {
     user_pwd=`pwd`
     cd ~
 
-    console_log "Clone repository: nns779/px4_drv"
-    git clone -q https://github.com/nns779/px4_drv.git
+    console_log "Clone repository: tsukumijima/px4_drv"
+    git clone -q https://github.com/tsukumijima/px4_drv.git
     if_error_exit $? "Clone repository"
 
     console_log "Change directory: px4_drv/fwtool"
@@ -165,11 +166,11 @@ function fn02_build_fw_w3u4() {
     if_error_exit $? "Build"
 
     console_log "Download device driver from plex-net.co.jp."
-    wget http://plex-net.co.jp/download/pxw3u4v1.4.zip -O pxw3u4v1.4.zip
+    wget http://plex-net.co.jp/plex/pxw3u4/pxw3u4_BDA_ver1x64.zip -O pxw3u4_BDA_ver1x64.zip
     if_error_exit $? "Download"
 
     console_log "Unzip device driver."
-    unzip -oj pxw3u4v1.4.zip pxw3u4v1/x64/PXW3U4.sys
+    unzip -oj pxw3u4_BDA_ver1x64.zip pxw3u4_BDA_ver1x64/PXW3U4.sys
     if_error_exit $? "Unzip"
 
     console_log "Make firmware."
@@ -182,7 +183,7 @@ function fn02_build_fw_w3u4() {
     if_error_exit $? "Publish"
 
     console_log "Clean..."
-    rm ./pxw3u4v1.4.zip ./PXW3U4.sys
+    rm ./pxw3u4_BDA_ver1x64.zip ./PXW3U4.sys
     if_error_exit $? "Clean"
 
     console_log "Change directory: px4_drv"
@@ -190,12 +191,12 @@ function fn02_build_fw_w3u4() {
     if_error_exit $? "Change directory"
     
     console_log "Build custom driver."
-    sudo cp -a ./ /usr/src/px4_drv-0.2.1
-    sudo dkms add px4_drv/0.2.1
+    sudo cp -a ./ /usr/src/px4_drv-0.4.4
+    sudo dkms add px4_drv/0.4.4
     if_error_exit $? "Build"
     
     console_log "Install custom driver."
-    sudo dkms install px4_drv/0.2.1
+    sudo dkms install px4_drv/0.4.4
     if_error_exit $? "Install"
     
     console_log "Load px4_drv module."
@@ -205,7 +206,7 @@ function fn02_build_fw_w3u4() {
     console_log "Check /boot/cmdline.txt"
     cat /boot/cmdline.txt | grep coherent_pool=4M
     if [ $? -ne 0 ]; then
-        console_log "${yellow}Append `coherent_pool=4M` to /boot/cmdline.txt${normal}"
+        console_log "${yellow}Append 'coherent_pool=4M' to /boot/cmdline.txt${normal}"
         echo -n `cat /boot/cmdline.txt` coherent_pool=4M > ./cmdline.txt
         sudo cp ./cmdline.txt /boot/cmdline.txt
         if_error_exit $? "Append"
@@ -217,7 +218,7 @@ function fn02_build_fw_w3u4() {
     console_log "Check /etc/modules"
     cat /etc/modules | grep px4_drv
     if [ "$?" -ne "0" ]; then
-        console_log "${yellow}Append `px4_drv` to /etc/modules${normal}"
+        console_log "${yellow}Append 'px4_drv' to /etc/modules${normal}"
         cat /etc/modules > ./modules
         echo px4_drv >> ./modules
         sudo cp ./modules /etc/modules
@@ -226,7 +227,7 @@ function fn02_build_fw_w3u4() {
     else
         console_success "OK."
     fi
-    cd user_pwd
+    cd $user_pwd
 
     section_title "[Job 2] Build and Install PLEX PX-W3U4 firmware. Done!"
 }
@@ -303,7 +304,7 @@ function fn03_setup_rec_tools() {
     if_error_exit $? "Remove libarib25-master"
     rm ./recpt1.zip
     if_error_exit $? "Remove recpt1.zip"
-    rm -rf recpt1-master
+    rm -rf ./recpt1-master
     if_error_exit $? "Remove recpt1-master"
     cd user_pwd
 
@@ -402,7 +403,7 @@ function fn04_setup_mirakurun_epgstation() {
     sleep 5
 
     fn05_check_version
-    cd user_pwd
+    cd $user_pwd
 
     section_title "[Job 4] Setup Mirakurun and EPGStation. Done!"
 }
@@ -418,7 +419,7 @@ function fn05_check_version() {
 }
 
 function fn00_interactive_menu() {
-    section_title "Why not try recording anime easily with Raspberry Pi!\n\t\tCould you select a job?"
+    section_title "Why not try recording anime easily with Raspberry Pi!\n\t\tCould you select a job?\n\t\tScript Version: 1.1-20240412"
     select choice in ">>>>>> Exec init (Job1)" ">>>>>> Exec install (Job2, Job3, Job4, Job5)" "[Job1] Install build essentials." "[Job2] Build Firmware PX-W3U4." "[Job3] Setup Recording tools." "[Job4] Setup Mirakurun and EPGStation." "[Job5] Check Version." "       Exit."
     do
         case $choice in
