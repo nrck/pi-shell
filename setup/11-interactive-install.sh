@@ -426,7 +426,7 @@ function fn00_interactive_menu() {
                 fn01_build_essential
                 break
                 ;;
-            ">>>>>> Exec install (Job2, Job3, Job4)")
+            ">>>>>> Exec install (Job2, Job3, Job4, Job5)")
                 fn02_build_fw_w3u4
                 fn03_setup_rec_tools
                 fn04_setup_mirakurun_epgstation
